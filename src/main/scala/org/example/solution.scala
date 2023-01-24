@@ -21,11 +21,11 @@ object solution {
       .getOrCreate();
     // Define logging level
     spark.sparkContext.setLogLevel("ERROR")
-    val PATH = sys.env("PWD")
-    println(PATH)
+
+
     //Create RDD from external CSV source; doing this
     import spark.implicits
-    val rdd_main = spark.sparkContext.textFile(PATH + "/sales_data_sample.csv")
+    val rdd_main = spark.sparkContext.textFile("/coderun/sales_data_sample.csv")
     val header = rdd_main.first()
     // skip the first row
     val main_rdd = rdd_main.filter( row=> row!= header)
@@ -90,6 +90,6 @@ object solution {
       .add(StructField("PRODUCTLINE", StringType, false))
       .add(StructField("AVERAGE_SALES_AMT", DoubleType, false))
     val dd = spark.createDataFrame(rowRDD, schema)
-    dd.coalesce(rowRDD.getNumPartitions).write.option("header", true).option("overwrite", true).csv("result_cs1")
+    dd.coalesce(rowRDD.getNumPartitions).write.option("header", true).option("overwrite", true).csv("result_csv")
   }
 }
