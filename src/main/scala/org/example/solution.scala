@@ -21,9 +21,11 @@ object solution {
       .getOrCreate();
     // Define logging level
     spark.sparkContext.setLogLevel("ERROR")
+    val PATH = sys.env("PWD")
+    println(PATH)
     //Create RDD from external CSV source; doing this
     import spark.implicits
-    val rdd_main = spark.sparkContext.textFile("/home/ayushchatur/sales_data_sample.csv")
+    val rdd_main = spark.sparkContext.textFile(PATH + "/sales_data_sample.csv")
     val header = rdd_main.first()
     // skip the first row
     val main_rdd = rdd_main.filter( row=> row!= header)
