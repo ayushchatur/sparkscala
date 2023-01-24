@@ -1,0 +1,151 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.example</groupId>
+  <artifactId>sparkscala</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
+  <description>My wonderfull scala app</description>
+  <inceptionYear>2010</inceptionYear>
+  <licenses>
+    <license>
+      <name>My License</name>
+      <url>http://....</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <maven.compiler.source>1.5</maven.compiler.source>
+    <maven.compiler.target>1.5</maven.compiler.target>
+    <encoding>UTF-8</encoding>
+<!--    <scala.version>2.8.0</scala.version>-->
+    <scala.majorVersion>2.12</scala.majorVersion>
+    <scala.minorVersion>.15</scala.minorVersion>
+    <spark.version>3.3.1</spark.version>
+  </properties>
+
+
+  <repositories>
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.specs</groupId>
+      <artifactId>specs</artifactId>
+      <version>1.2.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.majorVersion}${scala.minorVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${scala.majorVersion}</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.majorVersion}
+      </artifactId>
+      <version>${spark.version}</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+<!--        <version>2.15.0</version>-->
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+<!--            <configuration>-->
+<!--              <args>-->
+<!--                <arg>-make:transitive</arg>-->
+<!--                <arg>-dependencyfile</arg>-->
+<!--                <arg>${project.build.directory}/.scala_dependencies</arg>-->
+<!--              </args>-->
+<!--            </configuration>-->
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+<!--        <version>2.6</version>-->
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <buildcommands>
+            <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>
+          </buildcommands>
+          <additionalProjectnatures>
+            <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>
+          </additionalProjectnatures>
+          <classpathContainers>
+            <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+            <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>
+          </classpathContainers>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <tarLongFileMode>gnu</tarLongFileMode>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
